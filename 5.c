@@ -5,9 +5,10 @@
 
 void *print_message_function( void *ptr )
 {
-    char *message,*temp;
+    char message[100],temp[100];
     int total=0;
-    message = (char *) ptr;
+    strcpy(message, ptr);
+    message[strlen(message)-1]='\0';
     FILE *novel;
     novel=fopen("novel.txt","r");
     while(fgets(temp,1024,novel)!=NULL){
@@ -32,22 +33,27 @@ void *print_message_function( void *ptr )
 int main()
 {
     pthread_t thread[100];//inisialisasi awal
-    char test[100];
-    int  iret1, iret2,flag=0,banyak=0;
+    char test[100][100];
+    int  iret1, iret2,flag=0,jumlah=0,banyak=0;
     while(1){
         int i=0;
         flag=0;
         while(1){
-            test[i]=getchar();
-            if(test[i]==' '){
-                test[i]=='\0';break;
+            test[jumlah][i]=getchar();
+            if(test[jumlah][i]==' '){
+                test[jumlah][i]=='\0';break;
             }
-            if(test[i]=='\n'){
-                test[i]=='\0';flag=1;break;
+            if(test[jumlah][i]=='\n'){
+                test[jumlah][i]=='\0';flag=1;break;
             }
             i++;
         }
-        const char *message=test;
+        jumlah++;
+        if(flag) break;
+    }    
+
+    while(1){
+        const char *message=test[banyak];
         iret1 = pthread_create( &thread[banyak], NULL, print_message_function, (void*) message);//membuat thread pertama
         if(iret1)//jika eror
         {
@@ -55,7 +61,7 @@ int main()
             exit(EXIT_FAILURE);
         }
         banyak++;
-        if(flag) break;
+        if(jumlah==banyak) break;
     }
     for(int i=0;i<banyak;i++){
         pthread_join( thread[i], NULL);    
