@@ -1,3 +1,4 @@
+#include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <pthread.h> //library thread
@@ -31,21 +32,22 @@ void *print_message_function( void *ptr )
 int main()
 {
     pthread_t thread[100];//inisialisasi awal
-    const char *message;
-    int  iret1, iret2,flag=0;
+    char test[100];
+    int  iret1, iret2,flag=0,banyak=0;
     while(1){
         int i=0;
         flag=0;
         while(1){
-            message[i]=getchar();
-            if(message[i]==' '){
-                message[i]=='\0';break;
+            test[i]=getchar();
+            if(test[i]==' '){
+                test[i]=='\0';break;
             }
-            if(message[i]=='\n'){
-                message[i]=='\0';flag=1;break;
+            if(test[i]=='\n'){
+                test[i]=='\0';flag=1;break;
             }
             i++;
         }
+        const char *message=test;
         iret1 = pthread_create( &thread[banyak], NULL, print_message_function, (void*) message);//membuat thread pertama
         if(iret1)//jika eror
         {
