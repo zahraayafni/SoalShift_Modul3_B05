@@ -1,4 +1,5 @@
 #include <string.h>
+#include<unistd.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <pthread.h> //library thread
@@ -29,27 +30,24 @@ int main()
     statuskepiting = statuslohan =0;
     lohan=kepiting=100;
     pthread_t thread[2];
-    int a=0;
-    iret1 = pthread_create( &thread[banyak], NULL, print_message_function, (void*) a++);//membuat thread pertama
+    int a=0,iret1;
+    iret1 = pthread_create( &thread[0], NULL, print_message_function, (void*) a++);//membuat thread pertama
     if(iret1)//jika eror
     {
         fprintf(stderr,"Error - pthread_create() lohan return code: %d\n",iret1);
         exit(EXIT_FAILURE);
     }
-    iret1 = pthread_create( &thread[banyak], NULL, print_message_function, (void*) a);//membuat thread pertama
+    iret1 = pthread_create( &thread[1], NULL, print_message_function, (void*) a);//membuat thread pertama
     if(iret1)//jika eror
     {
         fprintf(stderr,"Error - pthread_create() kepiting return code: %d\n",iret1);
         exit(EXIT_FAILURE);
-    }    
-    for(int i=0;i<2;i++){
-        pthread_join( thread[i], NULL);    
     }
     while(1){
         int i=0;
         char a;
         system("clear");
-        printf("1. memberi makan lohan\n2. memberi makan kepiting\n masukan kode kegiatannya"
+        printf("1. memberi makan lohan\n2. memberi makan kepiting\n masukan kode kegiatannya => ");
         scanf("%d",&i);
         if(i==1) lohan+=10;
         else kepiting+=10;
