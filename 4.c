@@ -7,7 +7,7 @@ void *print_message_function( void *ptr )
 {
     int x=(int)ptr,total=1;
     for(int i=2;i<=x;i++) total*=i;
-    printf("%d! : %d\n", x,total);
+    printf("hasil %d! = %d\n", x,total);
 }
 
 int main()
